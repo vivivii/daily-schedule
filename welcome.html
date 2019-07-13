@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>我的日程表</title>
+        <style>
+            body{
+                text-align:center;
+                background:url(./image/welcome.png) center center;
+                background-size:cover;
+                background-attachment:fixed;
+                font-size: 20px;
+            }
+
+            .right{
+                position: absolute;
+                right: 20px;
+                top: 5px;
+            }
+
+            .down{
+                position: absolute;
+                right: 0px;
+                bottom: 0px;
+            }
+
+            .button{
+                padding: 15px 30px;
+                font-size: 15px;                
+                border-radius: 5px;
+                border: 0px;
+            }
+
+            .button:hover{
+                background-color: rgb(148,149,150);
+                border-radius: 5px;
+                opacity: 0.8;
+            }
+
+            .buttonx{
+                padding: 15px 50px;
+                font-size: 15px;                
+                border-radius: 5px;
+                border: 0px;
+            }
+
+            .buttonx:hover{
+                background-color: rgb(148,149,150);
+                border-radius: 5px;
+                opacity: 0.8;               
+            }
+
+        #prev{
+            cursor: pointer;
+            position: absolute;
+            top: 90px;
+            left: 0px;
+        }
+
+        #next{
+            cursor: pointer;
+            position: absolute;
+            top: 90px;
+            right: 0px;
+        }
+
+        #year{
+            font-weight:bold;
+            font-size: 25px;
+            position: absolute;
+            top: 45px;
+            right: 250px;
+        }
+
+        #title{
+            overflow: hidden;
+            list-style: none;
+            position: absolute;
+            left: 15px;
+            top: 130px;
+        }
+
+        #title > li{
+            float: left;
+            width: 160px;   
+            font-size: 20px;
+            font-weight: bolder;
+        }
+
+        #month{
+            position: absolute;
+            top: 70px;
+            left: 600px;
+            font-size: 30px;
+        }
+
+        #date{
+            list-style: none;
+            position: absolute;         
+            top: 173px;
+        }
+
+        #date > li{
+            float: left; 
+            width: 100px; 
+            height: 4px; 
+            padding: 20px;
+            margin: 1px;
+            border: 10px solid rgba(0,0,0,0); 
+            line-height: 34px; 
+            text-align: center; 
+            cursor: pointer; 
+        }
+
+        #date > .hover{
+            color: rgb(22, 56, 150);
+            font-weight: bolder;
+        }
+
+
+        #date > .hover:hover{
+            color: black;
+            background-color: rgb(208, 228, 182);
+            opacity: 0.6;
+            border-radius: 20px;
+        }
+
+        .active{
+            color: rgb(216, 6, 93);
+            font-weight: bolder;
+        }
+
+        .active:hover{
+            color: black;
+            background-color: rgb(235, 113, 123);
+            opacity: 0.6;
+            border-radius: 20px;
+        }
+
+        </style>
+        <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="right"><p id="name">你还没有登录哟 QAQ</p><script>
+            $.get("welcome.php",function(data,state){
+                document.getElementById("name").innerHTML = "欢迎你呀，" + data;
+                }); 
+            </script></div>
+        <div class="down"><a href = "login.html"><button class="button">重新登录</button></a></div>
+
+
+        <p>
+        <span id = "prev"><button class="buttonx">上 一 月</button></span>
+        <span id = "year">2017</span>
+        
+        <div id = "month">一   月</div>
+        <span id = "next"><button class="buttonx">下 一 月</button></span>
+        </p>
+            <ul id="title">
+            <li>日</li>
+            <li>一</li>
+            <li>二</li>
+            <li>三</li>
+            <li>四</li>
+            <li>五</li>
+            <li>六</li>
+        </ul>
+        <ul id = "date">
+        </ul>
+
+        <script type="text/javascript">
+            var dat = new Date();
+            var currentyear = dat.getFullYear();
+            var currentmonth = dat.getMonth();
+            var currentday = dat.getDate();
+            
+            function add(){
+                document.getElementById('date').innerHTML = "";
+                var year = dat.getFullYear();
+                var month = dat.getMonth();
+                var day = dat.getDate();
+                var arr = ["一   月","二   月","三   月","四   月","五   月","六   月","七   月","八   月","九   月","十   月","十  一  月","十  二  月"];
+                document.getElementById('year').innerText = year;
+                document.getElementById('month').innerText = arr[month];
+                var setdate = new Date(year,month + 1,1 - 1);
+                var setday = setdate.getDate();
+                var setweek = new Date(year,month,1).getDay();
+                
+                for(var i = 0; i < setweek; i++)
+                {
+                    var li = document.createElement('li');
+                    document.getElementById('date').appendChild(li);
+                }
+
+                for(var i = 1; i <= setday; i++)
+                {
+                    var li = document.createElement('li');
+                    li.innerText = i;
+                    if(currentyear == year && currentmonth == month && currentday == i)
+                    {
+                            li.className = "active";
+                    }
+                    else{
+                        li.className = "hover";
+                    }
+
+                    document.getElementById('date').appendChild(li);
+
+                }
+            }
+            function monn(){
+                var mon = month.innerHTML;
+                var mons;
+                switch(mon)
+                {
+                    case "一   月":
+                        mons = 1;
+                        break;
+                    case "二   月":
+                        mons = 2;
+                        break;
+                    case "三   月":
+                        mons = 3;
+                        break;
+                    case "四   月":
+                        mons = 4;
+                        break;
+                    case "五   月":
+                        mons = 5;
+                        break;
+                    case "六   月":
+                        mons = 6;
+                        break;
+                    case "七   月":
+                        mons = 7;
+                        break;
+                    case "八   月":
+                        mons = 8;
+                        break;
+                    case "九   月":
+                        mons = 9;
+                        break;
+                    case "十   月":
+                        mons = 10;
+                        break;
+                    case "十  一  月":
+                        mons = 11;
+                        break;
+                    case "十  二  月":
+                        mons = 12;
+                        break;
+                }
+                mon1 = mons;
+            }
+
+
+    function dayy(){
+        var days = document.getElementById("date").getElementsByTagName("li");
+        for(i=0;i<32;i++){
+        days[i].onclick = function(){
+            day1 = this.innerHTML;
+            monn();
+            year1 = year.innerHTML;
+    window.location.href='event.html?day1='+day1+'&mon1='+mon1+'&year1='+year1;  
+
+            // $.ajax({
+            //     type:"POST",
+            //     url:"event.php",
+            //     data:{
+            //         day1: Number(day1),
+            //         mon1: Number(mon1),
+            //         year1: Number(year1)
+            //     },
+            //     dataType:'text',
+            //     success: window.open('event.html'),
+            //  });
+            }
+        }
+    }
+        add();
+        document.getElementById("next").onclick = function()
+        {
+            dat.setMonth(dat.getMonth() + 1);
+            add();
+            dayy();    
+            year1 = year.innerHTML;
+        };
+        document.getElementById("prev").onclick = function()
+        {
+            dat.setMonth(dat.getMonth() - 1);
+            add();
+            dayy();
+            year1 = year.innerHTML;
+        };
+    dayy();
+    year1 = year.innerHTML;
+
+        </script>
+
+    </body>
+</html>
