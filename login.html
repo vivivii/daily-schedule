@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="UTF-8">
+        <title>注册</title>
+        <style>
+            body{
+                text-align:center;
+                background:url(./image/login.png) center center;
+                background-size:cover;
+                background-attachment:fixed;
+                font-size:18px;
+                font-weight:bold;
+            }
+            .right{
+                position:absolute;
+                right:200px;
+                top:185px;
+            }
+
+            .extra{
+                position: absolute;
+                right: 0px;
+                bottom:0px;
+            }
+            .submit {
+                background-color: rgb(238, 177, 201);
+                border: none;
+                color: white;
+                padding: 10px 50px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                border-radius:15px;
+            }
+            .submit:hover {
+                background-color:rgb(236, 59, 163);
+                color:white;
+            }
+
+            input{
+                border: 1px solid rgb(154, 156, 158);
+                background-color: #f0deb7;
+                padding: 13px 50px;
+                border-radius: 20px;
+                padding-left:5px;
+                box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+                transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+                font-weight:bold;             
+            }   
+
+            .button{
+                padding: 15px 30px;
+                font-size: 15px;                
+                border-radius: 5px;
+                border: 0px;
+            }
+
+            .button:hover{
+                background-color: rgb(233, 186, 56);
+                border-radius: 5px;
+                opacity: 0.8;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="right">
+        <form method="post" action = "login.php">
+            <p>用户名    <input style="opacity:0.4;" type="text" name="name" id="text"></p>
+            <br />
+            <p>密  码    <input style="opacity:0.4;" type="password" name="password" id="text"></p>
+            <br />
+            <p><input type="submit" name="submit" value="登    录" class="submit" id="text"></p>
+        </form></div>            
+        <div class="extra"><a href="signup.html"><button class="button">戳我注册 =v=</button></a></div>
+
+    </body>
+</html>
