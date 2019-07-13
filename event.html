@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="UTF-8">
+        <title>事件</title>
+        <style>
+        body{
+            background:url(./image/welcome.png) center center;
+            background-size:cover;
+            background-attachment:fixed;
+            margin-left: 80px;
+        }
+        .right{
+            position: absolute;
+            right: 20px;
+            top: 5px;
+        }    
+        .down{
+                position: absolute;
+                right: 0px;
+                top: 0px;
+            }
+
+            .button{
+                padding: 15px 30px;
+                font-size: 15px;                
+                border-radius: 5px;
+                border: 0px;
+            }
+
+            .button:hover{
+                background-color: rgb(148,149,150);
+                border-radius: 5px;
+                opacity: 0.8;
+            }
+
+            .button1{
+                background-color: rgb(54, 54, 53);
+                padding: 16px 40px;
+                color: white;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 20px;
+                margin: 4px 2px;
+                width: 200px;
+                -webkit-transition-duration: 0.4s;
+                transition-duration: 0.4s;
+                cursor: pointer;
+                border-radius: 15px;
+            }
+
+            .button1:hover{
+                color: black;
+                background-color: rgb(148,149,150);
+                border-radius: 15px;
+                opacity: 0.8;
+            }
+            #date{
+                font-size: 30px;
+                font-weight:600;
+                position: relative;
+                top: 20px;
+                text-align:center;
+            }
+            #incident{
+                font-size: 25px;
+                list-style: none;
+            }
+        </style>  
+        <script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+        <script> 
+            }
+    </script>
+    </head>
+
+<body>
+    <script>
+        urlinfo=window.location.href; //获取当前页面的url
+        len=urlinfo.length;//获取url的长度
+        offset=urlinfo.indexOf("?");//设置参数字符串开始的位置
+        newsidinfo=urlinfo.substr(offset,len);//取出参数字符串 这里会获得类似“id=1”这样的字符串
+        newsids=newsidinfo.split("=");//对获得的参数字符串按照“=”进行分割
+        newsid1=newsids[1].split("&");
+        var day = newsid1[0];
+        newsid2=newsids[2].split("&");
+        var month = newsid2[0];
+        newsid3=newsids[3].split("&");
+        var year = newsid3;
+        
+        
+        var ck = function(){
+            var x = prompt ("输入今天要做的事情鸭√");
+            if(x == "")
+                alert('还什么都没有填写哟~');
+                else if(x == null)
+                alert('已取消');
+            else{
+            $.ajax({
+                type:"POST",
+                url:"addevent.php",
+                data:{
+                    day: Number(day),
+                    mon: Number(month),
+                    year: Number(year),
+                    content: x
+                },
+                dataType:'text',
+                success:function(data){
+                if(data == true) 
+                   { alert('添加成功 =v=');
+                   location.reload([true]);   }
+                else alert('添加失败 QAQ');
+                }
+             });
+            }}
+    </script>
+    <div class="down"><a href = "welcome.html"><button class="button">返回日历</button></a></div>
+    <p id="date">加载失败 QAQ</p>
+    <script>
+        document.getElementById("date").innerHTML = year+ "   "+"年" + "   "+ month + "   "+ "月" + "    "+ day+ "   " + "日";
+        $.ajax({
+                type:"POST",
+                url:"event.php",
+                data:{
+                    day: Number(day),
+                    month: Number(month),
+                    year: Number(year)
+                },
+                success:function(data){
+                     if(data != "")
+                     {
+                         //alert(data);
+                        //  data.forEach(item);
+                        //items=data.split("<br>");
+
+                        //alert(items.length);
+                        //for (var i = 0; i < items.length; i) {  
+                            document.getElementById("incident").innerHTML = data;
+                        //}  
+                            //document.getElementById("incident").innerHTML = item;
+                        
+                    }
+                }
+             });
+    </script>
+    <li id="incident">今天还没有安排行程哟</li>
+    <buttton class = "button1" onclick="ck();">添加行程！！！</buttton>
+    </body>
+</html>
